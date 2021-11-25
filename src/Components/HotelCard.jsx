@@ -1,10 +1,12 @@
 import React from 'react'
 
-const HotelCard = () => {
+const HotelCard = ({ hotel }) => {
+
+  console.log(hotel)
   return (
     < div className="card" >
       <div className="card__header">
-        <p>Moscow Marriott Grand Hotel</p>
+        <p>{hotel.hotelName}</p>
         <i className="bi bi-heart-fill"></i>
       </div>
       <div className="card__body">
@@ -14,15 +16,15 @@ const HotelCard = () => {
       </div>
       <div className="card__footer">
         <div className="rating">
-          <i className="bi bi-star-fill" style={{ color: '#CDBC1E' }}></i>
-          <i className="bi bi-star-fill" style={{ color: '#CDBC1E' }}></i>
-          <i className="bi bi-star-fill" style={{ color: '#CDBC1E' }}></i>
-          <i className="bi bi-star-fill" style={{ color: '#6C6845' }}></i>
-          <i className="bi bi-star-fill" style={{ color: '#6C6845' }}></i>
+          <i className="bi bi-star-fill" style={{ color: `${hotel.stars > 0 ? '#CDBC1E' : '#6C6845'}` }}></i>
+          <i className="bi bi-star-fill" style={{ color: `${hotel.stars > 1 ? '#CDBC1E' : '#6C6845'}` }}></i>
+          <i className="bi bi-star-fill" style={{ color: `${hotel.stars > 2 ? '#CDBC1E' : '#6C6845'}` }}></i>
+          <i className="bi bi-star-fill" style={{ color: `${hotel.stars > 3 ? '#CDBC1E' : '#6C6845'}` }}></i>
+          <i className="bi bi-star-fill" style={{ color: `${hotel.stars > 4 ? '#CDBC1E' : '#6C6845'}` }}></i>
         </div>
         <div className="card__price">
           <p>Price:</p>
-          <p>23 234 Р</p>
+          <p>{hotel.priceFrom} Р</p>
         </div>
       </div>
     </div >
