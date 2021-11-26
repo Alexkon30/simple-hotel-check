@@ -383,6 +383,20 @@
   }
 }
 
+.favorite {
+  color: red;
 
+  &:hover {
+    color:gray;
+  }
+}
+
+.common {
+  color: gray;
+
+  &:hover {
+    color: red;
+  }
+}
 
 

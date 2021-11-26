@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchHotelsAction, setSityNameAction, setDaysAction, setCheckInAction } from '../store/bookingReducer'
+import { fetchHotelsAction, setSityNameAction, setDaysAction, setCheckInAction, setSortAction } from '../store/bookingReducer'
+import { setAuthAction } from '../store/loginReducer'
 
 import logout from '../img/logout.png'
 import vector from '../img/Vector.png'
@@ -17,11 +18,18 @@ const BookingPage = () => {
   const checkIn = useSelector(state => state.bookingState.checkIn)
   const days = useSelector(state => state.bookingState.days)
   const hotels = useSelector(state => state.bookingState.hotels)
+  const favoriteHotels = useSelector(state => state.favoriteState.favoriteHotels)
+  const favoriteIds = useSelector(state => state.favoriteState.favoriteIds)
+
+  const currentSity = useSelector(state => state.bookingState.currentSity)
+  const currentDate = useSelector(state => state.bookingState.currentDate)
+  const sortedFor = useSelector(state => state.bookingState.sortedFor)
+
 
   useEffect(() => {
-
+    dispatch(fetchHotelsAction({ sityName, checkIn, days, favoriteIds }))
+    // eslint-disable-next-line
   }, [])
-
 
 
   return (
@@ -29,7 +37,7 @@ const BookingPage = () => {
       <div className="booking">
         <div className="booking__header">
           <p>Simple Hotel Check</p>
-          <p>Выйти <img src={logout} alt="logout" /></p>
+          <p onClick={() => dispatch(setAuthAction(false))}>Выйти <img src={logout} alt="logout" /></p>
         </div>
 
         <div className="booking__body">
@@ -45,7 +53,7 @@ const BookingPage = () => {
                 <input type="text" value={days} onChange={(e) => dispatch(setDaysAction(e.target.value))} />
               </div>
               <div className="form__footer">
-                <input type="button" value="Найти" onClick={() => dispatch(fetchHotelsAction({ sityName, checkIn, days }))} />
+                <input type="button" value="Найти" onClick={() => dispatch(fetchHotelsAction({ sityName, checkIn, days, favoriteIds }))} />
               </div>
             </div>
 
@@ -55,14 +63,20 @@ const BookingPage = () => {
               </div>
 
               <div className="panel__selections">
-                <div className={'selector selector-active'}>
+                <div
+                  className={`selector ${sortedFor === 'rating' ? 'selector-active' : ''}`}
+                  onClick={() => dispatch(setSortAction('rating'))}
+                >
                   <p>Рейтинг</p>
                   <div className="selector__arrows">
                     <i className="bi bi-caret-up-fill"></i>
                     <i className="bi bi-caret-down"></i>
                   </div>
                 </div>
-                <div className={'selector'}>
+                <div
+                  className={`selector ${sortedFor === 'price' ? 'selector-active' : ''}`}
+                  onClick={() => dispatch(setSortAction('price'))}
+                >
                   <p>Цена</p>
                   <div className="selector__arrows">
                     <i className="bi bi-caret-up-fill"></i>
@@ -73,9 +87,18 @@ const BookingPage = () => {
               </div>
 
               <div className="panel__cards">
-                {/* <HotelCard />
-                <HotelCard />
-                <HotelCard /> */}
+                {sortedFor === 'rating'
+                  ? <>
+                    {[...favoriteHotels]
+                      .sort((a, b) => b.stars - a.stars)
+                      .map(hotel => <HotelCard hotel={hotel} key={hotel.hotelId} />)}
+                  </>
+                  : <>
+                    {[...favoriteHotels]
+                      .sort((a, b) => b.priceFrom - a.priceFrom)
+                      .map(hotel => <HotelCard hotel={hotel} key={hotel.hotelId} />)}
+                  </>}
+                {/* {favoriteHotels.map(hotel => <HotelCard hotel={hotel} key={hotel.hotelId} />)} */}
               </div>
             </div>
 
@@ -88,15 +111,21 @@ const BookingPage = () => {
               <div className="maininfo__location">
                 Отели
               </div>
-              <div className="maininfo__divider">
-                <img src={vector} alt="vector" />
-              </div>
-              <div className="maininfo__city">
-                Москва
-              </div>
-              <div className="maininfo__date">
-                07 июля 2020
-              </div>
+              {currentSity !== '' && currentDate !== ''
+                ?
+                <>
+                  <div className="maininfo__divider">
+                    <img src={vector} alt="vector" />
+                  </div>
+                  <div className="maininfo__city">
+                    {currentSity}
+                  </div>
+                  <div className="maininfo__date">
+                    {currentDate}
+                  </div>
+                </>
+                : <></>}
+
             </div>
 
             <div className="maininfo__pages">
@@ -121,11 +150,12 @@ const BookingPage = () => {
             </div>
 
             <div className="maininfo__count">
-              Добавлено в Избранное: <span>3</span> отеля
+              Добавлено в Избранное: <span>{favoriteHotels.length}</span> отеля
             </div>
 
             <div className="maininfo__cards">
-              {hotels.length ? hotels.map(hotel => <InfoCard hotel={hotel} key={hotel.hotelId} />) : <></>}
+
+              {hotels.map(hotel => <InfoCard hotel={hotel} key={hotel.hotelId} />)}
             </div>
           </div>
         </div>

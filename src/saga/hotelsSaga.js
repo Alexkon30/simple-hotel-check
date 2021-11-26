@@ -1,11 +1,9 @@
 import { put, takeEvery, call } from 'redux-saga/effects'
-import { FETCH_HOTELS, setHotelsAction } from '../store/bookingReducer'
+import { FETCH_HOTELS, setHotelsAction, setCurrentAction } from '../store/bookingReducer'
 
 
 const fetchHotels = ({ payload }) => {
   const { checkIn, days, sityName } = { ...payload }
-
-  console.log('9: ', checkIn, days, sityName)
 
   let checkInDate = new Date(Date.parse(checkIn))
   let checkOutDate = new Date(checkInDate.getFullYear(), checkInDate.getMonth(), checkInDate.getDate() + Number(days))
@@ -15,7 +13,6 @@ const fetchHotels = ({ payload }) => {
   let day = `${checkOutDate.getDate()}`.length === 2 ? checkOutDate.getDate() : `0${checkOutDate.getDate()}`
   let checkOut = `${year}-${month}-${day}`
 
-  console.log('18: ', checkIn, checkOut)
   return fetch(`http://engine.hotellook.com/api/v2/cache.json?location=${sityName}&currency=rub&checkIn=${checkIn}&checkOut=${checkOut}&limit=10`)
 }
 
@@ -28,12 +25,12 @@ const fetchHotels = ({ payload }) => {
 
 function* fetchHotelsWorker(data) {
   // const sityInfo = yield call(fetchSityInfo, data)
-  const hotels = yield call(fetchHotels, data)
-  // yield console.log(hotels)
 
-  // console.log(hotels)
-  const json = yield call(() => new Promise(res => res(hotels.json())))
-  // yield console.log(json)
+  const hotels = yield call(fetchHotels, data)
+  const json = yield call(() => new Promise(res => res(hotels.json()))
+    .then(hotels => hotels.map(hotel => ({ ...hotel, isFavorite: data.payload.favoriteIds.includes(hotel.hotelId) ? true : false }))))
+
+  yield put(setCurrentAction(json[0].location.name))
   yield put(setHotelsAction(json))
 }
 

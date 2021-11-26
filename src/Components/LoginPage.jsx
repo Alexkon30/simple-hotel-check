@@ -33,9 +33,7 @@ const LoginPage = () => {
               <input type="password" value={password} onChange={(e) => setPass(e.target.value)} />
             </div>
             <div className="form__footer">
-              <input type="button" value="Войти" onClick={() => {
-                console.log(login, password)
-              }} />
+              <input type="button" value="Войти" onClick={() => dispatch(setAuthAction(true))} />
             </div>
           </div>
         </div>

@@ -258,4 +258,14 @@
     color: #41522E;
     font-size: 30px; }
 
+.favorite {
+  color: red; }
+  .favorite:hover {
+    color: gray; }
+
+.common {
+  color: gray; }
+  .common:hover {
+    color: red; }
+
 /*# sourceMappingURL=App.css.map */
