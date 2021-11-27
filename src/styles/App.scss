@@ -72,16 +72,41 @@
     width: 100%;
     margin-bottom: 32px;
 
+    & .valid {
+      color: #424242;
+    }
+
+    & .invalid {
+      color: #EB1717;
+    }
+
+    & .form__field:not(:first-child) {
+      margin-top: 24px;
+    }
+
+    & input {
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 18px;
+      color: inherit;
+      padding: 16px;
+    }
+  }
+
+  &__field {
     &>p {
       font-weight: 300;
       font-size: 16px;
       line-height: 19px;
       margin-bottom: 7px;
-      color: #424242;
+      color: inherit;
 
-      &:not(:first-child) {
-        margin-top: 24px;
+      &:last-child {
+        font-size: 12px;
+        line-height: 14px;
+        margin-top: 7px;
       }
+
     }
   }
 
@@ -194,24 +219,51 @@
 
 }
 
-.panel__header {
-  margin-bottom: 32px;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
-  color: #424242;
-}
+.panel {
 
-.panel__selections {
-  display: flex;
-  margin-bottom: 32px;
-}
+  &__header {
+    margin-bottom: 32px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    color: #424242;
+  }
 
-.panel__cards {
+  &__selections {
+    display: flex;
+    margin-bottom: 32px;
+  }
 
-  & > div:not(:last-child) {
-    border-bottom: 1px solid #878787;
-    margin-bottom: 16px;
+  &__cards {
+    height: 300px;
+    padding: 8px 8px 0 0;
+
+    overflow-y: auto;
+
+    scrollbar-color: #D4AA70 #e4e4e4;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #E7E7E7;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      /* 5 - ползунок */
+      width: 2px;
+      border-radius: 2px;
+      background-color: #41522E;
+      // box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+    }
+
+    &>div:not(:last-child) {
+      border-bottom: 1px solid #878787;
+      margin-bottom: 16px;
+    }
   }
 }
 
@@ -229,7 +281,7 @@
     color: #424242;
 
 
-    & > i:hover {
+    &>i:hover {
       color: red;
       cursor: pointer;
     }
@@ -304,7 +356,7 @@
 
   &__pages {
     display: flex;
-    overflow: hidden;
+    align-items: center;
     margin-bottom: 28px;
 
     & div:not(:last-child) {
@@ -324,10 +376,8 @@
   }
 
   &__cards {
-    padding-top: 8px;
-    // max-height: 530px;
-    max-height: 550px;
-    padding-right: 8px;
+    padding: 8px 8px 0 0;
+    height: 550px;
 
     overflow-y: auto;
 
@@ -360,15 +410,31 @@
 
 .color {
   width: 164px;
-  height: 149px;
+  height: 150px;
   border-radius: 10px;
+}
+
+.carousel {
+  display: flex;
+}
+.window {
+  overflow: hidden;
+}
+
+.arrow {
+  cursor: pointer;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #41522E;
+  border-radius: 6px;
 }
 
 .infoCard {
   display: flex;
   padding: 16px 16px 0 0;
 
-  & .icon > i {
+  & .icon>i {
     width: 64px;
     height: 64px;
     background-color: #F5F6F5;
@@ -379,7 +445,7 @@
     margin-right: 24px;
     color: #41522E;
     font-size: 30px;
-    
+
   }
 }
 
@@ -387,7 +453,7 @@
   color: red;
 
   &:hover {
-    color:gray;
+    color: gray;
   }
 }
 
@@ -398,5 +464,3 @@
     color: red;
   }
 }
-
-

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchHotelsAction, setSityNameAction, setDaysAction, setCheckInAction, setSortAction } from '../store/bookingReducer'
 import { setAuthAction } from '../store/loginReducer'
@@ -25,11 +25,27 @@ const BookingPage = () => {
   const currentDate = useSelector(state => state.bookingState.currentDate)
   const sortedFor = useSelector(state => state.bookingState.sortedFor)
 
+  const [transform, setTransform] = useState(0)
+
 
   useEffect(() => {
     dispatch(fetchHotelsAction({ sityName, checkIn, days, favoriteIds }))
     // eslint-disable-next-line
   }, [])
+
+  const handleLeft = (num) => {
+    setTransform(transform => {
+      if (transform + num > 0) return 0
+      return transform + num
+    })
+  }
+
+  const handleRight = (num) => {
+    setTransform(transform => {
+      if (transform - num < -520) return -520
+      return transform - num
+    })
+  }
 
 
   return (
@@ -83,7 +99,6 @@ const BookingPage = () => {
                     <i className="bi bi-caret-down"></i>
                   </div>
                 </div>
-
               </div>
 
               <div className="panel__cards">
@@ -98,7 +113,6 @@ const BookingPage = () => {
                       .sort((a, b) => b.priceFrom - a.priceFrom)
                       .map(hotel => <HotelCard hotel={hotel} key={hotel.hotelId} />)}
                   </>}
-                {/* {favoriteHotels.map(hotel => <HotelCard hotel={hotel} key={hotel.hotelId} />)} */}
               </div>
             </div>
 
@@ -129,24 +143,36 @@ const BookingPage = () => {
             </div>
 
             <div className="maininfo__pages">
-              <div className="color">
-                <img src={rec1} alt="rec1" />
+              <div className="arrow" onClick={() => handleLeft(100)}><i className="bi bi-caret-left-fill"></i></div>
+              <div className="window">
+                <div
+                  className="carousel"
+                  style={{
+                    transform: `translateX(${transform}px)`,
+                    transition: 'all 0.3s'
+                  }}
+                >
+                  <div className="color">
+                    <img src={rec1} alt="rec1" />
+                  </div>
+                  <div className="color">
+                    <img src={rec2} alt="rec1" />
+                  </div>
+                  <div className="color">
+                    <img src={rec3} alt="rec1" />
+                  </div>
+                  <div className="color">
+                    <img src={rec1} alt="rec1" />
+                  </div>
+                  <div className="color">
+                    <img src={rec2} alt="rec1" />
+                  </div>
+                  <div className="color">
+                    <img src={rec3} alt="rec1" />
+                  </div>
+                </div>
               </div>
-              <div className="color">
-                <img src={rec2} alt="rec1" />
-              </div>
-              <div className="color">
-                <img src={rec3} alt="rec1" />
-              </div>
-              <div className="color">
-                <img src={rec1} alt="rec1" />
-              </div>
-              <div className="color">
-                <img src={rec2} alt="rec1" />
-              </div>
-              <div className="color">
-                <img src={rec3} alt="rec1" />
-              </div>
+              <div className="arrow" onClick={() => handleRight(100)}><i className="bi bi-caret-right-fill"></i></div>
             </div>
 
             <div className="maininfo__count">

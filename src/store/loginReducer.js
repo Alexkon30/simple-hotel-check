@@ -17,6 +17,7 @@ export const loginReducer = (state = defaultState, action) => {
       return { ...state, password: action.payload }
 
     case SET_AUTH:
+      if (action.payload === false) localStorage.clear()
       return { ...state, isAuth: action.payload }
 
     default:

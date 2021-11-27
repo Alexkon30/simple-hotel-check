@@ -51,14 +51,28 @@
   .form__body {
     width: 100%;
     margin-bottom: 32px; }
-    .form__body > p {
+    .form__body .valid {
+      color: #424242; }
+    .form__body .invalid {
+      color: #EB1717; }
+    .form__body .form__field:not(:first-child) {
+      margin-top: 24px; }
+    .form__body input {
       font-weight: 300;
       font-size: 16px;
-      line-height: 19px;
-      margin-bottom: 7px;
-      color: #424242; }
-      .form__body > p:not(:first-child) {
-        margin-top: 24px; }
+      line-height: 18px;
+      color: inherit;
+      padding: 16px; }
+  .form__field > p {
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 7px;
+    color: inherit; }
+    .form__field > p:last-child {
+      font-size: 12px;
+      line-height: 14px;
+      margin-top: 7px; }
   .form input {
     width: 100%;
     height: 50px;
@@ -137,14 +151,27 @@
   font-size: 24px;
   line-height: 28px;
   color: #424242; }
-
 .panel__selections {
   display: flex;
   margin-bottom: 32px; }
-
-.panel__cards > div:not(:last-child) {
-  border-bottom: 1px solid #878787;
-  margin-bottom: 16px; }
+.panel__cards {
+  height: 300px;
+  padding: 8px 8px 0 0;
+  overflow-y: auto;
+  scrollbar-color: #D4AA70 #e4e4e4;
+  scrollbar-width: thin; }
+  .panel__cards::-webkit-scrollbar {
+    width: 2px; }
+  .panel__cards::-webkit-scrollbar-track {
+    background-color: #E7E7E7; }
+  .panel__cards::-webkit-scrollbar-thumb {
+    /* 5 - ползунок */
+    width: 2px;
+    border-radius: 2px;
+    background-color: #41522E; }
+  .panel__cards > div:not(:last-child) {
+    border-bottom: 1px solid #878787;
+    margin-bottom: 16px; }
 
 .card {
   padding-bottom: 15px;
@@ -208,7 +235,7 @@
       line-height: 28px; }
   .maininfo__pages {
     display: flex;
-    overflow: hidden;
+    align-items: center;
     margin-bottom: 28px; }
     .maininfo__pages div:not(:last-child) {
       margin-right: 12px; }
@@ -220,9 +247,8 @@
     .maininfo__count span {
       font-weight: 500; }
   .maininfo__cards {
-    padding-top: 8px;
-    max-height: 550px;
-    padding-right: 8px;
+    padding: 8px 8px 0 0;
+    height: 550px;
     overflow-y: auto;
     scrollbar-color: #D4AA70 #e4e4e4;
     scrollbar-width: thin; }
@@ -240,8 +266,22 @@
 
 .color {
   width: 164px;
-  height: 149px;
+  height: 150px;
   border-radius: 10px; }
+
+.carousel {
+  display: flex; }
+
+.window {
+  overflow: hidden; }
+
+.arrow {
+  cursor: pointer;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #41522E;
+  border-radius: 6px; }
 
 .infoCard {
   display: flex;

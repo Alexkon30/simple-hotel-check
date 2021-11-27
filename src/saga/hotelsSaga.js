@@ -30,7 +30,7 @@ function* fetchHotelsWorker(data) {
   const json = yield call(() => new Promise(res => res(hotels.json()))
     .then(hotels => hotels.map(hotel => ({ ...hotel, isFavorite: data.payload.favoriteIds.includes(hotel.hotelId) ? true : false }))))
 
-  yield put(setCurrentAction(json[0].location.name))
+  yield put(setCurrentAction(json[0]?.location.name))
   yield put(setHotelsAction(json))
 }
 
