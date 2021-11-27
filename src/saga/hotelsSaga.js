@@ -13,7 +13,7 @@ const fetchHotels = ({ payload }) => {
   let day = `${checkOutDate.getDate()}`.length === 2 ? checkOutDate.getDate() : `0${checkOutDate.getDate()}`
   let checkOut = `${year}-${month}-${day}`
 
-  return fetch(`http://engine.hotellook.com/api/v2/cache.json?location=${sityName}&currency=rub&checkIn=${checkIn}&checkOut=${checkOut}&limit=10`)
+  return fetch(`https://engine.hotellook.com/api/v2/cache.json?location=${sityName}&currency=rub&checkIn=${checkIn}&checkOut=${checkOut}&limit=10`)
 }
 
 // const fetchSityInfo = ({ payload }) => {
