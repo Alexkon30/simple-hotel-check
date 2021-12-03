@@ -1,14 +1,12 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { likeHotelAction, dislikeHotelAction } from '../store/bookingReducer'
 import { addHotelAction, removeHotelAction, addIdAction, removeIdAction } from '../store/favoriteReducer'
 
 
 const HotelCard = ({ hotel }) => {
-  const { hotelId, hotelName, isFavorite, stars, priceFrom } = { ...hotel }
+  const { hotelId, hotelName, isFavorite, stars, priceFrom, residenceTime, checkIn } = { ...hotel }
   const dispatch = useDispatch()
-  const currentDays = useSelector(state => state.bookingState.currentDays)
-  const currentDate = useSelector(state => state.bookingState.currentDate)
 
 
   return (
@@ -28,9 +26,9 @@ const HotelCard = ({ hotel }) => {
           }}></i>}
       </div>
       <div className="card__body">
-        <div className="date">{currentDate}</div>
+        <div className="date">{checkIn}</div>
         <div className="divider"> - </div>
-        <div className="days">{currentDays} день</div>
+        <div className="days">{residenceTime} {residenceTime % 10 === 1 && residenceTime % 100 !== 11 ? 'день' : residenceTime % 10 >= 2 && residenceTime % 10 <= 4 && (residenceTime % 100 < 10 || residenceTime % 100 >= 20) ? 'дня' : 'дней'}</div>
       </div>
       <div className="card__footer">
         <div className="rating">

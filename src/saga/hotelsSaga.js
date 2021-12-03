@@ -26,9 +26,19 @@ const fetchHotels = ({ payload }) => {
 function* fetchHotelsWorker(data) {
   // const sityInfo = yield call(fetchSityInfo, data)
 
+  let months = ['января', 'февраля', 'марта',
+    'апреля', 'мая', 'июня', 'июля', 'августа',
+    'сентября', 'октября', 'ноября', 'декабря']
+  let date = data.payload.checkIn.split('-').reverse()
+
   const hotels = yield call(fetchHotels, data)
   const json = yield call(() => new Promise(res => res(hotels.json()))
-    .then(hotels => hotels.map(hotel => ({ ...hotel, isFavorite: data.payload.favoriteIds.includes(hotel.hotelId) ? true : false }))))
+    .then(hotels => hotels.map(hotel => ({
+      ...hotel,
+      isFavorite: data.payload.favoriteIds.includes(hotel.hotelId),
+      residenceTime: data.payload.days,
+      checkIn: `${date[0]} ${months[+date[1] - 1]}, ${date[2]}`
+    }))))
 
   yield put(setCurrentAction(json[0]?.location.name))
   yield put(setHotelsAction(json))

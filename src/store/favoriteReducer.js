@@ -12,7 +12,9 @@ const defaultState = {
 export const favoriteReducer = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_HOTEL:
-      return { ...state, favoriteHotels: [...state.favoriteHotels, action.payload] }
+      let hotelsCopy = JSON.parse(JSON.stringify(state.favoriteHotels))
+      hotelsCopy.push(action.payload)
+      return { ...state, favoriteHotels: hotelsCopy }
 
     case REMOVE_HOTEL:
       return { ...state, favoriteHotels: state.favoriteHotels.filter(hotel => hotel.hotelId !== action.payload.hotelId) }

@@ -110,7 +110,7 @@ const BookingPage = () => {
                   </>
                   : <>
                     {[...favoriteHotels]
-                      .sort((a, b) => b.priceFrom - a.priceFrom)
+                      .sort((a, b) => a.priceFrom - b.priceFrom)
                       .map(hotel => <HotelCard hotel={hotel} key={hotel.hotelId} />)}
                   </>}
               </div>
